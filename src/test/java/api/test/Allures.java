@@ -17,7 +17,7 @@ public class Allures {
     @Story("GET Request with Valid User")
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Description : Verify the details of user of id-1")
-    public void verifyUser() {
+    public void verifyPlayer() {
         JSONObject data = new JSONObject();
 
         data.put("playerId", 1);
@@ -48,7 +48,7 @@ public class Allures {
                 .extract().response();
     }
     @Test
-    public void createUser() {
+    public void createPlayer() {
         // Given
         given()
 
@@ -69,6 +69,22 @@ public class Allures {
                 .body("gender", equalTo(null))
                 .body("age", equalTo(null))
                 .body("role", equalTo(null))
+                .log().all()
+                .extract().response();
+    }
+    @Test
+    public void getAllPlayers() {
+        // Given
+        given()
+
+                .filter(new AllureRestAssured())
+                // When
+                .when()
+                .get("http://3.68.165.45/player/get/all")
+                // Then
+                .then()
+                .statusCode(200)
+                .statusLine("HTTP/1.1 200 ")
                 .log().all()
                 .extract().response();
     }
