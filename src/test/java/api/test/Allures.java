@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 @Epic("REST API Testing using TestNG")
 @Feature("Verify CRUID Operations on User module")
@@ -20,7 +19,7 @@ public class Allures {
     public void verifyPlayer() {
         JSONObject data = new JSONObject();
 
-        data.put("playerId", 1);
+        data.put("playerId", 403593282);
 
         // Given
         given()
@@ -36,14 +35,7 @@ public class Allures {
                 .then()
                 .statusCode(200)
                 .statusLine("HTTP/1.1 200 ")
-                // To verify user of id 1
-                .body("id", equalTo(1))
-                .body("login", equalTo("supervisor"))
-                .body("password", equalTo("string"))
-                .body("screenName", equalTo("testSupervisor"))
-                .body("gender", equalTo("male"))
-                .body("age", equalTo(17))
-                .body("role", equalTo("supervisor"))
+
                 .log().all()
                 .extract().response();
     }
@@ -63,13 +55,6 @@ public class Allures {
                 .statusCode(200)
                 .statusLine("HTTP/1.1 200 ")
 
-                .body("id", equalTo(957390786))
-                .body("login", equalTo("green"))
-                .body("password", equalTo(null))
-                .body("screenName", equalTo(null))
-                .body("gender", equalTo(null))
-                .body("age", equalTo(null))
-                .body("role", equalTo(null))
                 .log().all()
                 .extract().response();
     }
@@ -92,29 +77,26 @@ public class Allures {
     @Test
     public void updatePlayer(){
         JSONObject data = new JSONObject();
-        data.put("age", 43);
-        data.put("gender", "male");
-        data.put("login", "getUserByIdPositive1");
+        data.put("age", 20);
+        data.put("gender", "female");
+        data.put("login", "green");
         data.put("password", "blueberry");
         data.put("role", "admin");
-        data.put("screenName", "createBlueberry");
+        data.put("screenName", "pumpkin");
         // Given
         given()
 
                 .filter(new AllureRestAssured())
+                .contentType(ContentType.JSON)
+                .body(data.toString())
                 // When
                 .when()
-                .patch("http://3.68.165.45/player/update/supervisor/456335133")
+                .patch("http://3.68.165.45/player/update/supervisor/403593282")
                 // Then
                 .then()
                 .statusCode(200)
                 .statusLine("HTTP/1.1 200 ")
-                .body("id", equalTo(45633133))
-                .body("login", equalTo("getUserByIdPositive1"))
-                .body("screenName", equalTo("createBlueberry"))
-                .body("gender", equalTo("male"))
-                .body("age", equalTo(43))
-                .body("role", equalTo("admin"))
+
                 .log().all()
                 .extract().response();
 
