@@ -49,6 +49,7 @@ public class Allures {
     }
     @Test
     public void createPlayer() {
+
         // Given
         given()
 
@@ -87,6 +88,37 @@ public class Allures {
                 .statusLine("HTTP/1.1 200 ")
                 .log().all()
                 .extract().response();
+    }
+    @Test
+    public void updatePlayer(){
+        JSONObject data = new JSONObject();
+        data.put("age", 43);
+        data.put("gender", "male");
+        data.put("login", "getUserByIdPositive1");
+        data.put("password", "blueberry");
+        data.put("role", "admin");
+        data.put("screenName", "createBlueberry");
+        // Given
+        given()
+
+                .filter(new AllureRestAssured())
+                // When
+                .when()
+                .patch("http://3.68.165.45/player/update/supervisor/456335133")
+                // Then
+                .then()
+                .statusCode(200)
+                .statusLine("HTTP/1.1 200 ")
+                .body("id", equalTo(45633133))
+                .body("login", equalTo("getUserByIdPositive1"))
+                .body("screenName", equalTo("createBlueberry"))
+                .body("gender", equalTo("male"))
+                .body("age", equalTo(43))
+                .body("role", equalTo("admin"))
+                .log().all()
+                .extract().response();
+
+
     }
     }
 
